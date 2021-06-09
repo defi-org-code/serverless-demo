@@ -1,0 +1,20 @@
+service: serverless
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-2
+  deploymentBucket:
+    tags:
+      Project: "defi.org by Rotem"
+
+functions:
+  demo-function:
+    handler: handler
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true
