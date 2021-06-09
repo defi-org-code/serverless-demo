@@ -12,7 +12,7 @@ provider:
 
 functions:
   demo-function:
-    handler: handler
+    handler: handler.hello
     events:
       - http:
           path: hello

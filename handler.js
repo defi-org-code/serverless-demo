@@ -1,5 +1,5 @@
 
-exports.handler = async (event, context) => {
+exports.hello = async (event, context) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
