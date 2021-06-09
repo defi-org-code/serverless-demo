@@ -1,31 +1,30 @@
 name: deploy to lambda
-on: [ push ]
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
-  deploy_source:
-    name: build and deploy lambda
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 14.x ]
-    runs-on: ubuntu-latest
-    env:
-      CI: true
+        node-version: [14.x]
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install and build
-        run: |
-          npm ci
-          npm run build --if-present
-      - name: zip bundle
-        run: npm run deploy
-      - name: default deploy
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.SERVERLESS_AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.SERVERLESS_AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-2
-          function_name: serverless
-          zip_file: bundle.zip
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm ci
+        npm run build --if-present
+    - name: serverless deploy
+      uses: serverless/github-action@master
+      with:
+        args: deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SERVERLESS_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SERVERLESS_AWS_SECRET_ACCESS_KEY }}
