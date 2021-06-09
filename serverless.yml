@@ -7,16 +7,16 @@ provider:
   runtime: nodejs14.x
   region: us-east-2
   tags:
-    Project: "{{ awsProject }}"
+    Project: ${self:awsProject}
   deploymentBucket:
     tags:
-      Project: "{{ awsProject }}"
+      Project: ${self:awsProject}
   iam:
     role:
       tags:
-        Project: "{{ awsProject }}"
+        Project: ${self:awsProject}
   stackTags:
-    Project: "{{ awsProject }}"
+    Project: ${self:awsProject}
 
 functions:
   demo-function:
