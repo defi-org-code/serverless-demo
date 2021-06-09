@@ -1,11 +1,22 @@
 service: serverless
 
+awsProject: "defi.org by Rotem"
+
 provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-2
   tags:
-    Project: "defi.org by Rotem"
+    Project: "{{ awsProject }}"
+  deploymentBucket:
+    tags:
+      Project: "{{ awsProject }}"
+  iam:
+    role:
+      tags:
+        Project: "{{ awsProject }}"
+  stackTags:
+    Project: "{{ awsProject }}"
 
 functions:
   demo-function:
