@@ -1,12 +1,14 @@
 name: deploy to lambda
-on: [push]
+on: [ push ]
 jobs:
   deploy_source:
     name: build and deploy lambda
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [ 14.x ]
     runs-on: ubuntu-latest
+    env:
+      CI: true
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
@@ -17,11 +19,8 @@ jobs:
         run: |
           npm ci
           npm run build --if-present
-        env:
-          CI: true
       - name: zip bundle
-        run: |
-          zip -qq -r ./bundle.zip ./
+        run: npm run deploy
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
