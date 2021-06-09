@@ -4,9 +4,8 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-2
-  deploymentBucket:
-    tags:
-      Project: "defi.org by Rotem"
+  tags:
+    Project: "defi.org by Rotem"
 
 functions:
   demo-function:
