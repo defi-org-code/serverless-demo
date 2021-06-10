@@ -2,8 +2,7 @@
 
 const uuid = require("uuid");
 const AWS = require('aws-sdk');
-
-const db = new AWS.DynamoDB.DocumentClient();
+const fs = require("fs");
 
 module.exports.create = async (event, context) => {
   const timestamp = new Date().getTime();
@@ -11,21 +10,27 @@ module.exports.create = async (event, context) => {
   const key = uuid.v4();
   const value = event.pathParameters.value;
 
-  const r = await db.put({
-    TableName: process.env.DYNAMODB_TABLE,
-    Item: {
-      key,
-      value,
-      createdAt: timestamp,
-      updatedAt: timestamp,
-    },
-  })
+  const path = `${process.cwd()}/my-example/foo.json`;
+
+  fs.writeFileSync(path, JSON.stringify({key: value}), {encoding: "utf8"});
 
   return {
     statusCode: 200,
-    body: JSON.stringify(r),
+    body: JSON.stringify("OK"),
   };
 };
+
+module.exports.list = async (event, context) => {
+
+  const path = `${process.cwd()}/my-example/foo.json`;
+
+  const result = JSON.parse(fs.readFileSync(path, {encoding: "utf8"}));
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(result),
+  }
+}
 
 // module.exports.update = async (event, context) => {
 //   const key = uuid.v4();
@@ -43,11 +48,3 @@ module.exports.create = async (event, context) => {
 // module.exports.delete = async (event, context) => {
 // }
 //
-// module.exports.list = async (event, context) => {
-//   const result = await db.scan({TableName: process.env.DYNAMODB_TABLE});
-//
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify(result.Items),
-//   }
-// }

@@ -43,6 +43,10 @@ functions:
           path: create/{value}
           method: get
           cors: true
+      - http:
+          path: list
+          method: get
+          cors: true
     fileSystemConfig:
       localMountPath: /mnt/efs
       arn: ${self:custom.awsStorageARN}
