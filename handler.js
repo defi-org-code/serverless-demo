@@ -1,7 +1,7 @@
-//const path = require("path");
-//const fs = require("fs-extra");
+const path = require("path");
+const fs = require("fs-extra");
 
-//const storage = path.resolve(process.env.HOME_DIR, "storage.json");
+const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
   //const param = event.pathParameters.param;
@@ -9,7 +9,7 @@ async function reader(event, context) {
   //const result = await fs.readJson(storage);
 
   //return success({param, timestamp: new Date(result.timestamp).toString()});
-  return success("OK");
+  return success("OK2");
 }
 
 async function writer(event, context) {
