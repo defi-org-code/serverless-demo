@@ -43,6 +43,17 @@ functions:
           path: create/{value}
           method: get
           cors: true
+    fileSystemConfig:
+      localMountPath: /mnt/efs
+      arn: ${self:custom.awsStorageARN}
+    vpc:
+      securityGroupIds:
+        - ${self:custom.awsStorageSG}
+      subnetIds:
+        - ${self:custom.awsStorageSubnet}
+  list:
+    handler: handler.list
+    events:
       - http:
           path: list
           method: get
@@ -55,6 +66,7 @@ functions:
         - ${self:custom.awsStorageSG}
       subnetIds:
         - ${self:custom.awsStorageSubnet}
+
 #  list:
 #    handler: handler.list
 #    events:
