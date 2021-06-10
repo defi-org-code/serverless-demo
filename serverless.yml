@@ -1,7 +1,7 @@
-service: serverless
+service: serverless-demo # change this to your service name!
 
 custom:
-  PROJECT: defi.org by Rotem
+  PROJECT: Temporary Project by Zlotin # change this to your project name!
 
 provider: ${file(./serverless-provider.yml)}
 
