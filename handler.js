@@ -5,6 +5,8 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
   const param = event.pathParameters.param;
+  
+  throw new Error("test error");
 
   const result = await fs.readJson(storage);
 
