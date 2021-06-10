@@ -1,34 +1,22 @@
 {
   "name": "serverless-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "postinstall": "node postci.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "serverless demo",
+  "license": "MIT",
+  "author": "defi.org",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/defi-org-code/serverless-demo.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/defi-org-code/serverless-demo/issues"
   },
   "homepage": "https://github.com/defi-org-code/serverless-demo#readme",
+  "main": "index.js",
   "dependencies": {
-    "aws-sdk": "2.x.x",
-    "uuid": "8.x.x",
-    "yamljs": "0.3.x"
+    "uuid": "8.x.x"
   },
-  "config": {
-    "serverless-fn": {
-      "alive": {
-        "method": "get",
-        "path": "alive"
-      }
-    }
+  "scripts": {
+    "test": ";"
   }
 }

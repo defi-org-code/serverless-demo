@@ -51,20 +51,3 @@ async function doExec(fn) {
     }
   }
 }
-
-// module.exports.update = async (event, context) => {
-//   const key = uuid.v4();
-//   const value = event.pathParameters.value;
-//
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify({key, value})
-//   }
-// }
-//
-// module.exports.get = async (event, context) => {
-// }
-//
-// module.exports.delete = async (event, context) => {
-// }
-//

@@ -1,0 +1,2 @@
+localMountPath: /mnt/efs
+arn: ${env:AWS_STORAGE_ARN}

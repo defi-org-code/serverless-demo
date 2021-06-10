@@ -2,12 +2,12 @@ name: aws
 runtime: nodejs14.x
 region: us-east-2
 tags:
-  Project: ${self:custom.awsProject}
+  Project: ${self:custom.PROJECT}
 stackTags:
-  Project: ${self:custom.awsProject}
+  Project: ${self:custom.PROJECT}
 deploymentBucket:
   tags:
-    Project: ${self:custom.awsProject}
+    Project: ${self:custom.PROJECT}
 iam:
   role:
     statements:
@@ -22,7 +22,7 @@ iam:
           - elasticfilesystem:DescribeMountTargets
         Resource: ${env:AWS_STORAGE_ARN}
     tags:
-      Project: ${self:custom.awsProject}
+      Project: ${self:custom.PROJECT}
 vpc:
   securityGroupIds:
     - ${env:AWS_STORAGE_SG}

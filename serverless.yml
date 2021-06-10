@@ -1,72 +1,39 @@
 service: serverless
 
 custom:
-  awsProject: "defi.org by Rotem"
-  awsFileSystem:
-    localMountPath: /mnt/efs
-    arn: ${env:AWS_STORAGE_ARN}
+  PROJECT: defi.org by Rotem
 
 provider: ${file(./serverless-provider.yml)}
 
 functions:
   create:
-    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.create
+    fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
           path: create/{value}
           method: get
           cors: true
   list:
-    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.list
+    fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
           path: list
           method: get
           cors: true
   alive:
-    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.alive
+    fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
           path: alive
           method: get
           cors: true
-  exec:
-    fileSystemConfig: ${self:custom.awsFileSystem}
-    handler: handler.exec
-    events:
-      - http:
-          path: exec/{value}
-          method: get
-          cors: true
-
-#  list:
-#    handler: handler.list
+#  tick:
+#    handler: handler.tick
+#    fileSystemConfig: ${file(./serverless-fs.yml)}
 #    events:
-#      - http:
-#          path: list
-#          method: get
-#          cors: true
-#  get:
-#    handler: handler.get
-#    events:
-#      - http:
-#          path: get/{id}
-#          method: get
-#          cors: true
-#  update:
-#    handler: handler.update
-#    events:
-#      - http:
-#          path: update/{id}
-#          method: get
-#          cors: true
-#  delete:
-#    handler: handler.delete
-#    events:
-#      - http:
-#          path: delete/{id}
-#          method: get
-#          cors: true
+#      - schedule:
+#        name: tick event
+#        rate: rate(1 minutes)
