@@ -39,7 +39,8 @@ resources:
       Properties:
         Tags:
           -
-            Project: ${self:custom.awsProject}
+            Key: Project
+            Value: ${self:custom.awsProject}
         AttributeDefinitions:
           - AttributeName: key
             AttributeType: S
