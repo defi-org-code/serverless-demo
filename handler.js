@@ -2,17 +2,27 @@
 
 const uuid = require("uuid");
 const fs = require("fs");
+const cp = require("child_process");
 
-module.exports.alive = async (event, context) => exec(() => {
+module.exports.alive = async (event, context) => doExec(() => {
   return {
     statusCode: 200,
     body: "OK"
   }
 });
 
+module.exports.exec = async (event, context) => doExec(() => {
+  const result = cp.execSync(event.pathParameters.value, {encoding: "utf8"});
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(result)
+  }
+});
+
 const path = `/mnt/efs/foo.json`;
 
-module.exports.create = async (event, context) => exec(() => {
+module.exports.create = async (event, context) => doExec(() => {
   const timestamp = new Date().getTime();
 
   const key = uuid.v4();
@@ -32,7 +42,7 @@ module.exports.create = async (event, context) => exec(() => {
   };
 });
 
-module.exports.list = async (event, context) => exec(() => {
+module.exports.list = async (event, context) => doExec(() => {
   const result = JSON.parse(fs.readFileSync(path, {encoding: "utf8"}));
 
   return {
@@ -41,7 +51,7 @@ module.exports.list = async (event, context) => exec(() => {
   }
 })
 
-async function exec(fn) {
+async function doExec(fn) {
   try {
     return await fn();
   } catch (e) {

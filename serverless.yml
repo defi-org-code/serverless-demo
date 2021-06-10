@@ -81,6 +81,21 @@ functions:
         - ${self:custom.awsStorageSG}
       subnetIds:
         - ${self:custom.awsStorageSubnet}
+  exec:
+    handler: handler.exec
+    events:
+      - http:
+          path: exec/{value}
+          method: get
+          cors: true
+    fileSystemConfig:
+      localMountPath: /mnt/efs
+      arn: ${self:custom.awsStorageARN}
+    vpc:
+      securityGroupIds:
+        - ${self:custom.awsStorageSG}
+      subnetIds:
+        - ${self:custom.awsStorageSubnet}
 
 #  list:
 #    handler: handler.list
