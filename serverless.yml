@@ -2,7 +2,7 @@ service: serverless
 
 custom:
   awsProject: "defi.org by Rotem"
-  awsStorageARN: "arn:aws:elasticfilesystem:us-east-2:506367651493:access-point/fsap-0be903f3557bc34ca"
+  awsStorageARN: "arn:aws:elasticfilesystem:us-east-2:506367651493:access-point/fsap-07151c0c439b7d82a"
   awsStorageSG: "sg-beb396d6"
   awsStorageSubnet: "subnet-25dd204d"
 
