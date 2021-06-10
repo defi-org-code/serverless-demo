@@ -2,21 +2,11 @@
 
 const uuid = require("uuid");
 const fs = require("fs");
-const cp = require("child_process");
 
 module.exports.alive = async (event, context) => doExec(() => {
   return {
     statusCode: 200,
     body: "OK"
-  }
-});
-
-module.exports.exec = async (event, context) => doExec(() => {
-  const result = cp.execSync(decodeURI(event.pathParameters.value), {encoding: "utf8"});
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(result)
   }
 });
 

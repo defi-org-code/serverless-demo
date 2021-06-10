@@ -35,65 +35,37 @@ provider:
 
 functions:
   create:
+    ${file(./serverless-fn.yml)}
     handler: handler.create
     events:
       - http:
           path: create/{value}
           method: get
           cors: true
-    fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: ${self:custom.awsStorageARN}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.awsStorageSG}
-      subnetIds:
-        - ${self:custom.awsStorageSubnet}
   list:
+    ${file(./serverless-fn.yml)}
     handler: handler.list
     events:
       - http:
           path: list
           method: get
           cors: true
-    fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: ${self:custom.awsStorageARN}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.awsStorageSG}
-      subnetIds:
-        - ${self:custom.awsStorageSubnet}
   alive:
+    ${file(./serverless-fn.yml)}
     handler: handler.alive
     events:
       - http:
           path: alive
           method: get
           cors: true
-    fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: ${self:custom.awsStorageARN}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.awsStorageSG}
-      subnetIds:
-        - ${self:custom.awsStorageSubnet}
   exec:
+    ${file(./serverless-fn.yml)}
     handler: handler.exec
     events:
       - http:
           path: exec/{value}
           method: get
           cors: true
-    fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: ${self:custom.awsStorageARN}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.awsStorageSG}
-      subnetIds:
-        - ${self:custom.awsStorageSubnet}
 
 #  list:
 #    handler: handler.list

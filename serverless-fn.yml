@@ -1,0 +1,8 @@
+fileSystemConfig:
+  localMountPath: /mnt/efs
+  arn: ${self:custom.awsStorageARN}
+  vpc:
+    securityGroupIds:
+      - ${self:custom.awsStorageSG}
+    subnetIds:
+      - ${self:custom.awsStorageSubnet}
