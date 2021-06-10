@@ -1,34 +1,50 @@
 'use strict'
 
 const uuid = require("uuid");
-const AWS = require('aws-sdk');
 const fs = require("fs");
 
-module.exports.create = async (event, context) => {
+module.exports.alive = async (event, context) => exec(() => {
+  return {
+    statusCode: 200,
+    body: "OK"
+  }
+});
+
+const path = `/mnt/efs/foo.json`;
+
+
+module.exports.create = async (event, context) => exec(() => {
   const timestamp = new Date().getTime();
 
   const key = uuid.v4();
   const value = event.pathParameters.value;
+  const data = {key: value};
 
-  const path = `${process.cwd()}/my-example/foo.json`;
-
-  fs.writeFileSync(path, JSON.stringify({key: value}), {encoding: "utf8"});
+  fs.writeFileSync(path, JSON.stringify(data), {encoding: "utf8"});
 
   return {
     statusCode: 200,
-    body: JSON.stringify("OK"),
+    body: JSON.stringify(data),
   };
-};
+});
 
-module.exports.list = async (event, context) => {
-
-  const path = `${process.cwd()}/my-example/foo.json`;
-
+module.exports.list = async (event, context) => exec(() => {
   const result = JSON.parse(fs.readFileSync(path, {encoding: "utf8"}));
 
   return {
     statusCode: 200,
     body: JSON.stringify(result),
+  }
+})
+
+async function exec(fn) {
+  try {
+    return await fn();
+  } catch (e) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(e.stack)
+    }
   }
 }
 
