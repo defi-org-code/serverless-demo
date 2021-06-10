@@ -10,8 +10,6 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-2
-  environment:
-    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
   tags:
     Project: ${self:custom.awsProject}
   stackTags:

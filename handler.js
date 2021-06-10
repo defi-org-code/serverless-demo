@@ -12,7 +12,7 @@ module.exports.alive = async (event, context) => doExec(() => {
 });
 
 module.exports.exec = async (event, context) => doExec(() => {
-  const result = cp.execSync(event.pathParameters.value, {encoding: "utf8"});
+  const result = cp.execSync(decodeURI(event.pathParameters.value), {encoding: "utf8"});
 
   return {
     statusCode: 200,
