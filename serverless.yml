@@ -1,4 +1,4 @@
-service: ${env:GITHUB_REPO_NAME}
+service: ${env:GITHUB_REPOSITORY}
 
 custom:
   PROJECT: Temporary Project by Zlotin # change this to your project name!
