@@ -33,11 +33,11 @@ function success(result) {
 async function catchErrors(event, context) {
   try {
     return await this(event, context);
-  } catch (e) {
+  } catch (err) {
     return {
       statusCode: 500,
-      body: e
-    }
+      body: err.toString(),
+    };
   }
 }
 
