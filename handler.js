@@ -1,53 +1,46 @@
 'use strict'
 
-const uuid = require("uuid");
-const fs = require("fs");
+import path from "path";
+import fs from "fs-extra"
 
-module.exports.alive = async (event, context) => doExec(() => {
-  return {
-    statusCode: 200,
-    body: "OK"
-  }
-});
+const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
-const path = `/mnt/efs/foo.json`;
+async function reader(event, context) {
+  const param = event.pathParameters.param;
 
-module.exports.create = async (event, context) => doExec(() => {
+  const result = await fs.readJson(storage);
+
+  return success({param, timestamp: new Date(result.timestamp)})
+}
+
+async function writer(event, context) {
+  await fs.ensureFile(storage);
+
   const timestamp = new Date().getTime();
+  await fs.writeJson(storage, {timestamp});
 
-  const key = uuid.v4();
-  const value = event.pathParameters.value;
+  return success("OK");
+}
 
-  const data = JSON.stringify({
-    timestamp,
-    key,
-    value
-  });
-
-  fs.writeFileSync(path, data, {encoding: "utf8"});
-
+function success(result) {
   return {
     statusCode: 200,
-    body: data,
+    body: result,
   };
-});
+}
 
-module.exports.list = async (event, context) => doExec(() => {
-  const result = JSON.parse(fs.readFileSync(path, {encoding: "utf8"}));
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(result),
-  }
-})
-
-async function doExec(fn) {
+async function catchErrors(event, context) {
   try {
-    return await fn();
+    return await this(event, context);
   } catch (e) {
     return {
       statusCode: 500,
-      body: JSON.stringify(e.stack)
+      body: e.toString()
     }
   }
+}
+
+module.exports = {
+  reader: catchErrors.bind(reader),
+  writer: catchErrors.bind(writer),
 }

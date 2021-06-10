@@ -3,6 +3,9 @@ runtime: nodejs14.x
 region: us-east-2
 tags:
   Project: ${self:custom.PROJECT}
+environment:
+  ROOT_DIR: /mnt/efs
+  HOME_DIR: /mnt/efs/${self:service}
 stackTags:
   Project: ${self:custom.PROJECT}
 deploymentBucket:

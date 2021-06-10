@@ -6,34 +6,17 @@ custom:
 provider: ${file(./serverless-provider.yml)}
 
 functions:
-  create:
-    handler: handler.create
+  writer:
+    handler: handler.writer
+    fileSystemConfig: ${file(./serverless-fs.yml)}
+    events:
+      - schedule:
+        rate: rate(1 minute)
+  reader:
+    handler: handler.reader
     fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
-          path: create/{value}
+          path: /${param}
           method: get
           cors: true
-  list:
-    handler: handler.list
-    fileSystemConfig: ${file(./serverless-fs.yml)}
-    events:
-      - http:
-          path: list
-          method: get
-          cors: true
-  alive:
-    handler: handler.alive
-    fileSystemConfig: ${file(./serverless-fs.yml)}
-    events:
-      - http:
-          path: alive
-          method: get
-          cors: true
-#  tick:
-#    handler: handler.tick
-#    fileSystemConfig: ${file(./serverless-fs.yml)}
-#    events:
-#      - schedule:
-#        name: tick event
-#        rate: rate(1 minutes)

@@ -14,7 +14,7 @@
   "homepage": "https://github.com/defi-org-code/serverless-demo#readme",
   "main": "index.js",
   "dependencies": {
-    "uuid": "8.x.x"
+    "fs-extra": "10.x.x"
   },
   "scripts": {
     "test": ";"
