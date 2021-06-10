@@ -27,27 +27,27 @@ module.exports.create = async (event, context) => {
   };
 };
 
-module.exports.update = async (event, context) => {
-  const key = uuid.v4();
-  const value = event.pathParameters.value;
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({key, value})
-  }
-}
-
-module.exports.get = async (event, context) => {
-}
-
-module.exports.delete = async (event, context) => {
-}
-
-module.exports.list = async (event, context) => {
-  const result = await db.scan({TableName: process.env.DYNAMODB_TABLE});
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(result.Items),
-  }
-}
+// module.exports.update = async (event, context) => {
+//   const key = uuid.v4();
+//   const value = event.pathParameters.value;
+//
+//   return {
+//     statusCode: 200,
+//     body: JSON.stringify({key, value})
+//   }
+// }
+//
+// module.exports.get = async (event, context) => {
+// }
+//
+// module.exports.delete = async (event, context) => {
+// }
+//
+// module.exports.list = async (event, context) => {
+//   const result = await db.scan({TableName: process.env.DYNAMODB_TABLE});
+//
+//   return {
+//     statusCode: 200,
+//     body: JSON.stringify(result.Items),
+//   }
+// }
