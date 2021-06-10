@@ -4,19 +4,25 @@
 
 1. Click "Use this template" and create a new repo under the same organization
 
-2. Edit the file `serverless.yml`
+2. Edit the file `serverless.yml`:
 
-    * Change `service` to a meaningful namespace for all of your AWS resources (no spaces)
+    * Change `service` to a meaningful namespace for all of your AWS resources (no spaces).
     
       > Example: `position-apy-monitor`
     
-    * Change `PROJECT` to your AWS project name (with spaces and owner)
+    * Change `PROJECT` to your AWS project name (with spaces and owner).
 
       > Example: `Base Assets Squad by Zlotin`
 
     * This template has two functions. If you don't need *writer* that is scheduled repeatedly and *reader* that is triggered by GET requests, edit `functions` to create the functions you need. See [serverless.com reference](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/) and [serverless.com examples](https://www.serverless.com/examples/).
 
-3. Edit the file `handler.js` to add your logic
+3. Edit the file `handler.js` to add your logic.
+
+4. Your changes will be automatically deployed to AWS on every commmit to master. See the deploy log in Github Actions to get the *reader* URL endpoint on AWS.
+
+    > TIP: Let the deploy workflow complete before committing again. Never cancel a deploy workflow to avoid corrupting AWS.
+
+5. When you don't need the functions anymore, please clean up and delete your AWS resources by going to Github Actions and running the `delete lambda` workflow.
 
 ## What does this template provide?
 
