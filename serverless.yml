@@ -35,7 +35,14 @@ provider:
 
 functions:
   create:
-    ${file(./serverless-fn.yml)}
+    fileSystemConfig:
+      localMountPath: /mnt/efs
+      arn: ${self:custom.awsStorageARN}
+      vpc:
+        securityGroupIds:
+          - ${self:custom.awsStorageSG}
+        subnetIds:
+          - ${self:custom.awsStorageSubnet}
     handler: handler.create
     events:
       - http:
