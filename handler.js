@@ -1,7 +1,7 @@
 'use strict'
 
-import path from "path";
-import fs from "fs-extra"
+const path = require("path");
+const fs = require("fs-extra");
 
 const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
@@ -10,7 +10,7 @@ async function reader(event, context) {
 
   const result = await fs.readJson(storage);
 
-  return success({param, timestamp: new Date(result.timestamp)})
+  return success({param, timestamp: new Date(result.timestamp)});
 }
 
 async function writer(event, context) {
@@ -35,7 +35,7 @@ async function catchErrors(event, context) {
   } catch (e) {
     return {
       statusCode: 500,
-      body: e.toString()
+      body: e
     }
   }
 }
