@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node postci.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,13 +19,16 @@
   },
   "homepage": "https://github.com/defi-org-code/serverless-demo#readme",
   "dependencies": {
-    "aws-sdk": "^2.x.x",
-    "uuid": "^8.x.x"
+    "aws-sdk": "2.x.x",
+    "uuid": "8.x.x",
+    "yamljs": "0.3.x"
   },
-  "serverless-fn": {
-    "alive": {
-      "method": "get",
-      "path": "alive"
+  "config": {
+    "serverless-fn": {
+      "alive": {
+        "method": "get",
+        "path": "alive"
+      }
     }
   }
 }

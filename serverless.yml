@@ -2,47 +2,15 @@ service: serverless
 
 custom:
   awsProject: "defi.org by Rotem"
-  awsStorageARN: "arn:aws:elasticfilesystem:us-east-2:506367651493:access-point/fsap-02a6bda784f32d525"
-  awsStorageSG: "sg-beb396d6"
-  awsStorageSubnet: "subnet-25dd204d"
+  awsFileSystem:
+    localMountPath: /mnt/efs
+    arn: ${env:AWS_STORAGE_ARN}
 
-provider:
-  name: aws
-  runtime: nodejs14.x
-  region: us-east-2
-  tags:
-    Project: ${self:custom.awsProject}
-  stackTags:
-    Project: ${self:custom.awsProject}
-  deploymentBucket:
-    tags:
-      Project: ${self:custom.awsProject}
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - ec2:CreateNetworkInterface
-            - ec2:DescribeNetworkInterface
-            - ec2:DeleteNetworkInterface
-            - elasticfilesystem:ClientMount
-            - elasticfilesystem:ClientRootAccess
-            - elasticfilesystem:ClientWrite
-            - elasticfilesystem:DescribeMountTargets
-          Resource: ${self:custom.awsStorageARN}
-      tags:
-        Project: ${self:custom.awsProject}
+provider: ${file(./serverless-provider.yml)}
 
 functions:
   create:
-    fileSystemConfig:
-      localMountPath: /mnt/efs
-      arn: ${self:custom.awsStorageARN}
-      vpc:
-        securityGroupIds:
-          - ${self:custom.awsStorageSG}
-        subnetIds:
-          - ${self:custom.awsStorageSubnet}
+    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.create
     events:
       - http:
@@ -50,7 +18,7 @@ functions:
           method: get
           cors: true
   list:
-    ${file(./serverless-fn.yml)}
+    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.list
     events:
       - http:
@@ -58,7 +26,7 @@ functions:
           method: get
           cors: true
   alive:
-    ${file(./serverless-fn.yml)}
+    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.alive
     events:
       - http:
@@ -66,7 +34,7 @@ functions:
           method: get
           cors: true
   exec:
-    ${file(./serverless-fn.yml)}
+    fileSystemConfig: ${self:custom.awsFileSystem}
     handler: handler.exec
     events:
       - http:

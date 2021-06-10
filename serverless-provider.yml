@@ -1,0 +1,30 @@
+name: aws
+runtime: nodejs14.x
+region: us-east-2
+tags:
+  Project: ${self:custom.awsProject}
+stackTags:
+  Project: ${self:custom.awsProject}
+deploymentBucket:
+  tags:
+    Project: ${self:custom.awsProject}
+iam:
+  role:
+    statements:
+      - Effect: Allow
+        Action:
+          - ec2:CreateNetworkInterface
+          - ec2:DescribeNetworkInterface
+          - ec2:DeleteNetworkInterface
+          - elasticfilesystem:ClientMount
+          - elasticfilesystem:ClientRootAccess
+          - elasticfilesystem:ClientWrite
+          - elasticfilesystem:DescribeMountTargets
+        Resource: ${env:AWS_STORAGE_ARN}
+    tags:
+      Project: ${self:custom.awsProject}
+vpc:
+  securityGroupIds:
+    - ${env:AWS_STORAGE_SG}
+  subnetIds:
+    - ${env:AWS_STORAGE_SUBNET}
