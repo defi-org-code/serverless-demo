@@ -12,19 +12,23 @@ module.exports.alive = async (event, context) => exec(() => {
 
 const path = `/mnt/efs/foo.json`;
 
-
 module.exports.create = async (event, context) => exec(() => {
   const timestamp = new Date().getTime();
 
   const key = uuid.v4();
   const value = event.pathParameters.value;
-  const data = {key: value};
 
-  fs.writeFileSync(path, JSON.stringify(data), {encoding: "utf8"});
+  const data = JSON.stringify({
+    timestamp,
+    key,
+    value
+  });
+
+  fs.writeFileSync(path, data, {encoding: "utf8"});
 
   return {
     statusCode: 200,
-    body: JSON.stringify(data),
+    body: data,
   };
 });
 
