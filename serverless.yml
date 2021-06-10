@@ -44,8 +44,6 @@ resources:
         AttributeDefinitions:
           - AttributeName: key
             AttributeType: S
-          - AttributeName: value
-            AttributeType: S
         KeySchema:
           - AttributeName: key
             KeyType: HASH
