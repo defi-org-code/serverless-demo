@@ -38,7 +38,8 @@ resources:
       DeletionPolicy: Retain
       Properties:
         Tags:
-          - Project: ${self:custom.awsProject}
+          -
+            Project: ${self:custom.awsProject}
         AttributeDefinitions:
           - AttributeName: key
             AttributeType: S
