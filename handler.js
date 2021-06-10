@@ -33,7 +33,7 @@ async function catchErrors(event, context) {
   } catch (err) {
     return {
       statusCode: 500,
-      body: err.stack,
+      body: err.stack || err.toString(),
     };
   }
 }
