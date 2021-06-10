@@ -17,6 +17,6 @@ functions:
     fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
-          path: /${param}
+          path: read/{param}
           method: get
           cors: true
