@@ -5,20 +5,17 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
   const param = event.pathParameters.param;
-  
-  throw new Error("test error");
 
   const result = await fs.readJson(storage);
 
-  //return success({param, timestamp: new Date(result.timestamp).toString()});
-  return success(JSON.stringify(result));
+  return success({ param, timestamp: new Date(result.timestamp) });
 }
 
 async function writer(event, context) {
-  //await fs.ensureFile(storage);
+  await fs.ensureFile(storage);
 
-  //const timestamp = new Date().getTime();
-  //await fs.writeJson(storage, {timestamp});
+  const timestamp = new Date().getTime();
+  await fs.writeJson(storage, {timestamp});
 
   return success("OK");
 }
@@ -26,7 +23,7 @@ async function writer(event, context) {
 function success(result) {
   return {
     statusCode: 200,
-    body: result,
+    body: JSON.stringify(result),
   };
 }
 
@@ -36,7 +33,7 @@ async function catchErrors(event, context) {
   } catch (err) {
     return {
       statusCode: 500,
-      body: `${err.message}\n${err.stack}`,
+      body: err.stack,
     };
   }
 }
