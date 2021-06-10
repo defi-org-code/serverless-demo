@@ -36,7 +36,7 @@ async function catchErrors(event, context) {
   } catch (err) {
     return {
       statusCode: 500,
-      body: err.toString(),
+      body: `${err.message}\n${err.stack}`,
     };
   }
 }
