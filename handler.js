@@ -9,7 +9,7 @@ async function reader(event, context) {
   //const result = await fs.readJson(storage);
 
   //return success({param, timestamp: new Date(result.timestamp).toString()});
-  return success(event.toString());
+  return success(JSON.stringify(event.pathParameters));
 }
 
 async function writer(event, context) {
