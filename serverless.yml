@@ -1,28 +1,88 @@
 service: serverless
 
-awsProject: "defi.org by Rotem"
+custom:
+  awsProject: "defi.org by Rotem"
 
 provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-2
   tags:
-    Project: ${self:awsProject}
+    Project: ${self:custom.awsProject}
   deploymentBucket:
     tags:
-      Project: ${self:awsProject}
+      Project: ${self:custom.awsProject}
   iam:
     role:
       tags:
-        Project: ${self:awsProject}
+        Project: ${self:custom.awsProject}
   stackTags:
-    Project: ${self:awsProject}
+    Project: ${self:custom.awsProject}
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+resources:
+  Resources:
+    FoobarDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        Tags:
+          - Project: ${self:custom.awsProject}
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+          - AttributeName: value
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 functions:
-  demo-function:
-    handler: handler.hello
+  create:
+    handler: handler.create
     events:
       - http:
-          path: hello
+          path: create/{value}
+          method: get
+          cors: true
+  list:
+    handler: handler.list
+    events:
+      - http:
+          path: list
+          method: get
+          cors: true
+  get:
+    handler: handler.get
+    events:
+      - http:
+          path: get/{id}
+          method: get
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http:
+          path: update/{id}
+          method: get
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          path: delete/{id}
           method: get
           cors: true

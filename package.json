@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/defi-org-code/serverless-demo/issues"
   },
-  "homepage": "https://github.com/defi-org-code/serverless-demo#readme"
+  "homepage": "https://github.com/defi-org-code/serverless-demo#readme",
+  "dependencies": {
+    "aws-sdk": "^2.x.x",
+    "uuid": "^8.x.x"
+  }
 }
