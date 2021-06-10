@@ -10,7 +10,7 @@ async function reader(event, context) {
 
   const result = await fs.readJson(storage);
 
-  return success({param, timestamp: new Date(result.timestamp)});
+  return success({param, timestamp: new Date(result.timestamp).toString()});
 }
 
 async function writer(event, context) {
