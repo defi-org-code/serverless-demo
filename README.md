@@ -5,10 +5,6 @@
 1. Click "Use this template" and create a new repo under the same organization
 
 2. Edit the file `serverless.yml`:
-
-    * Change `service` to a meaningful namespace for all of your AWS resources (no spaces).
-    
-      > Example: `position-apy-monitor`
     
     * Change `PROJECT` to your AWS project name (with spaces and owner).
 
@@ -18,11 +14,13 @@
 
 3. Edit the file `handler.js` to add your logic.
 
-4. Your changes will be automatically deployed to AWS on every commmit to master. See the deploy log in Github Actions to get the *reader* URL endpoint on AWS.
+4. Your changes will automatically deploy to AWS on every commmit to master. See the deploy log in Github Actions to get the *reader* URL endpoint on AWS.
 
     > TIP: Let the deploy workflow complete before committing again. Never cancel a deploy workflow to avoid corrupting AWS.
 
-5. When you don't need the functions anymore, please clean up and delete your AWS resources by going to Github Actions and running the `delete lambda` workflow.
+5. To monitor your lambda or get execution/error logs, login to AWS console and open Lambda under the region defined in `serverless-provider.yml`. Your function names will start with the name of your repo.
+
+6. When you don't need your functions anymore, please clean up and delete your AWS resources by going to Github Actions and running the `delete lambda` workflow manually.
 
 ## What does this template provide?
 
@@ -39,5 +37,3 @@
 The template relies on several shared resources on AWS that were already created manually. These include a VPC and the EFS instance. Both are designed to be shared by all lambda functions. You're not supposed to create any AWS resources manually.
 
 Several AWS values and resource IDs are defined on the Github Organization level as organization secrets. The CI workflow pulls them from Github secrets and injects them as environment variables for the serverless.com deploy tool. These incluse the AWS credentials (an AWS user was created for the CI), ARN accesspoint for the EFS instance, a security group for EFS access and a subnet ID for EFS access.
-
-If you need to monitor your lambda function or get execution/error logs, login to AWS console and look for Lambda functions under the region defined in `serverless-provider.yml`.
