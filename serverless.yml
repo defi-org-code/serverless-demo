@@ -1,4 +1,4 @@
-service: serverless-demo # change this to your service name!
+service: ${env:GITHUB_REPO_NAME}
 
 custom:
   PROJECT: Temporary Project by Zlotin # change this to your project name!
