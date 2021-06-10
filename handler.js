@@ -4,12 +4,12 @@ const fs = require("fs-extra");
 const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
-  const param = event.pathParameters.param;
+  //const param = event.pathParameters.param;
 
   //const result = await fs.readJson(storage);
 
   //return success({param, timestamp: new Date(result.timestamp).toString()});
-  return success(fs);
+  return success(event.toString());
 }
 
 async function writer(event, context) {
