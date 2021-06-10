@@ -23,11 +23,18 @@ module.exports.create = async (event, context) => {
 
   return {
     statusCode: 200,
-    body: r,
+    body: JSON.stringify(r),
   };
 };
 
 module.exports.update = async (event, context) => {
+  const key = uuid.v4();
+  const value = event.pathParameters.value;
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({key, value})
+  }
 }
 
 module.exports.get = async (event, context) => {
