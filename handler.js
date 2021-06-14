@@ -7,6 +7,7 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 // handlers
 
 async function reader(event, context) {
+  await writer();
   const param = event.pathParameters.param;
   const {timestamp, writeIP} = await fs.readJson(storage);
   const readIP = (await fetchGZippedResponse()).origin;
