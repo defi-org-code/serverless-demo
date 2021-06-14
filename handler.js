@@ -7,10 +7,14 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 // handlers
 
 async function reader(event, context) {
-  const param = event.pathParameters.param;
-  const result = await fs.readJson(storage);
-  const ip = await (await fetch("https://httpbin.org/ip")).json()
-  return success({param, timestamp: new Date(result.timestamp), writeIP: result.ip, readIP: ip});
+  try {
+    const param = event.pathParameters.param;
+    const result = await fs.readJson(storage);
+    const ip = await (await fetch("https://httpbin.org/ip")).json()
+    return success({param, timestamp: new Date(result.timestamp), writeIP: result.ip, readIP: ip});
+  } catch (e) {
+    return success("weird.. " + e)
+  }
 }
 
 async function writer(event, context) {
