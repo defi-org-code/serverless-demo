@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
+const fetch = require("node-fetch");
 
 const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
