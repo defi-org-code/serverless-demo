@@ -8,16 +8,16 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
   const param = event.pathParameters.param;
-  const result = await fs.readJson(storage);
-  const ip = await (await fetch("https://httpbin.org/ip")).json()
-  return success({param, timestamp: new Date(result.timestamp), writeIP: result.ip, readIP: ip});
+  const {timestamp, writeIP} = await fs.readJson(storage);
+  const readIP = (await fetchGZippedResponse()).origin;
+  return success({param, timestamp: new Date(timestamp), writeIP, readIP, event, context});
 }
 
 async function writer(event, context) {
   await fs.ensureFile(storage);
   const timestamp = new Date().getTime();
-  const ip = await (await fetch("https://httpbin.org/ip")).json()
-  await fs.writeJson(storage, {timestamp, ip});
+  const writeIP = (await fetchGZippedResponse()).origin;
+  await fs.writeJson(storage, {timestamp, writeIP});
   return success("OK");
 }
 
@@ -39,6 +39,11 @@ async function catchErrors(event, context) {
       body: err.stack || err.toString(),
     };
   }
+}
+
+async function fetchGZippedResponse() {
+  const response = await fetch("https://httpbin.org/gzip"); // returns gzipped response with request info
+  return await response.json();
 }
 
 // exports
