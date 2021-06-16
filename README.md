@@ -1,4 +1,6 @@
-# Serverless Function on AWS
+# Serverless Functions on AWS
+
+&nbsp;
 
 ## How to use this template?
 
@@ -22,6 +24,8 @@
 
 6. When you don't need your functions anymore, please clean up and delete your AWS resources by going to Github Actions and running the `delete lambda` workflow manually.
 
+&nbsp;
+
 ## What does this template provide?
 
 * A *writer* function that is triggered every X minutes that is supposed to do various checks, crunch some data and write the result as JSON ready for consumption by clients (AJAX).
@@ -32,8 +36,47 @@
 
 * Automatic CI using Github Actions that will deploy your lambda functions to AWS on every commit to master. You don't need to open AWS console at all, not even for the first deployment.
 
-## How is this template pre-configured for AWS?
+### Do you need to configure anything manually on AWS?
 
-The template relies on several shared resources on AWS that were already created manually. These include a VPC and the EFS instance. Both are designed to be shared by all lambda functions. You're not supposed to create any AWS resources manually.
+* The template relies on several shared resources on AWS that were already created manually. You're not supposed to create any AWS resources yourself.
 
-Several AWS values and resource IDs are defined on the Github Organization level as organization secrets. The CI workflow pulls them from Github secrets and injects them as environment variables for the serverless.com deploy tool. These incluse the AWS credentials (an AWS user was created for the CI), ARN accesspoint for the EFS instance, a security group for EFS access and a subnet ID for EFS access.
+* Log retention - TBD
+
+&nbsp;
+
+## How did we initially setup the environment? (so we don't forget)
+
+### Overview
+
+* CI - Github Actions with [serverless.com framework](https://www.serverless.com) as the deploy tool
+
+* API Keys - TBD
+
+* Logging - automatic through AWS CloudWatch (TBD)
+
+* Metrics - Grafana Cloud (TBD)
+
+### AWS Initial Setup
+
+* Create a VPC that has a private subnet with a NAT (with elastic IP) and a public subnet connected to the Internet according to this [blog post](https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/).
+
+* Create an EFS instance and mount it on the private subnet in the VPC. Create an Access Point:
+
+    ```
+    Root directory path: /efs
+    POSIX user:
+      User ID: 1000
+      Group ID: 1000
+    Root directory creation permissions:
+      Owner user ID: 1000
+      Owner group ID: 1000
+      Permissions: 0777
+    ```
+
+### Github Initial Setup
+
+* Create Github organization secrets that includes the resource IDs on AWS. The CI workflow pulls them from Github secrets and injects them as environment variables for the serverless.com deploy tool. These incluse the AWS credentials (an AWS user was created for the CI), ARN accesspoint for the EFS instance, a security group for EFS access and a subnet ID for EFS access.
+
+### Hardening Permissions
+
+* Limit the CI user with a policy according to this [post](https://serverless-stack.com/chapters/customize-the-serverless-iam-policy.html).
