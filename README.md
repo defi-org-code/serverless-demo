@@ -56,7 +56,7 @@
 
 * Metrics - Grafana Cloud (TBD)
 
-### AWS Initial Setup
+### AWS initial setup
 
 * Create a VPC that has a private subnet with a NAT (with elastic IP) and a public subnet connected to the Internet according to this [blog post](https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/).
 
@@ -73,10 +73,10 @@
       Permissions: 0777
     ```
 
-### Github Initial Setup
+### Github initial setup
 
 * Create Github organization secrets that includes the resource IDs on AWS. The CI workflow pulls them from Github secrets and injects them as environment variables for the serverless.com deploy tool. These incluse the AWS credentials (an AWS user was created for the CI), ARN accesspoint for the EFS instance, a security group for EFS access and a subnet ID for EFS access.
 
-### Hardening Permissions
+### Hardening permissions
 
 * Limit the CI user with a policy according to this [post](https://serverless-stack.com/chapters/customize-the-serverless-iam-policy.html).
