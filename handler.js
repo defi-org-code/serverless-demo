@@ -8,15 +8,16 @@ const storage = path.resolve(process.env.HOME_DIR, "storage.json");
 
 async function reader(event, context) {
   const param = event.pathParameters.param;
+  console.log(`reader running with param = ${param}`);
   const {timestamp, writeIP} = await fs.readJson(storage);
-  const readIP = (await fetchGZippedResponse()).origin;
+  const readIP = (await fetchJson()).origin;
   return success({param, timestamp: new Date(timestamp), writeIP, readIP, event, context});
 }
 
 async function writer(event, context) {
   await fs.ensureFile(storage);
   const timestamp = new Date().getTime();
-  const writeIP = (await fetchGZippedResponse()).origin;
+  const writeIP = (await fetchJson()).origin;
   await fs.writeJson(storage, {timestamp, writeIP});
   return success("OK");
 }
@@ -34,17 +35,19 @@ async function catchErrors(event, context) {
   try {
     return await this(event, context);
   } catch (err) {
+    const message = err.stack || err.toString();
+    console.error(message);
     return {
       statusCode: 500,
-      body: err.stack || err.toString(),
+      body: message,
     };
   }
 }
 
 // example
 
-async function fetchGZippedResponse() {
-  const response = await fetch("https://httpbin.org/gzip"); // returns gzipped response with request info
+async function fetchJson() {
+  const response = await fetch("https://httpbin.org/gzip"); // some example JSON web service
   return await response.json();
 }
 
