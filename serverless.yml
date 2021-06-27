@@ -5,6 +5,12 @@ custom:
 
 provider: ${file(./serverless-provider.yml)}
 
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
 functions:
   writer:
     handler: handler.writer

@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/node,macos,solidity,sublimetext,intellij+all,soliditytruffle,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,solidity,sublimetext,intellij+all,soliditytruffle,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/node,macos,solidity,sublimetext,intellij+all,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,solidity,sublimetext,intellij+all,visualstudiocode
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -12,6 +12,9 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -128,6 +131,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+.pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -164,8 +168,8 @@ build/Release
 node_modules/
 jspm_packages/
 
-# TypeScript v1 declaration files
-typings/
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -175,9 +179,6 @@ typings/
 
 # Optional eslint cache
 .eslintcache
-
-# Optional stylelint cache
-.stylelintcache
 
 # Microbundle cache
 .rpt2_cache/
@@ -197,7 +198,7 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
-.env*.local
+.env.production
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -205,18 +206,11 @@ typings/
 
 # Next.js build output
 .next
+out
 
 # Nuxt.js build / generate output
 .nuxt
 dist
-
-# Storybook build outputs
-.out
-.storybook-out
-storybook-static
-
-# rollup.js default build output
-dist/
 
 # Gatsby files
 .cache/
@@ -242,9 +236,12 @@ dist/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# Temporary folders
-tmp/
-temp/
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
 ### Solidity ###
 # Logs
@@ -269,15 +266,13 @@ temp/
 
 # Dependency directories
 
-# TypeScript v1 declaration files
+# Snowpack dependency directory (https://snowpack.dev/)
 
 # TypeScript cache
 
 # Optional npm cache directory
 
 # Optional eslint cache
-
-# Optional stylelint cache
 
 # Microbundle cache
 
@@ -294,10 +289,6 @@ temp/
 # Next.js build output
 
 # Nuxt.js build / generate output
-
-# Storybook build outputs
-
-# rollup.js default build output
 
 # Gatsby files
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -316,29 +307,7 @@ temp/
 
 # Stores VSCode versions used for testing VSCode extensions
 
-# Temporary folders
-
-### SolidityTruffle ###
-# depedencies
-node_modules
-
-# testing
-
-# production
-build
-build_webpack
-
-# misc
-npm-debug.log
-.truffle-solidity-loader
-.vagrant/**
-blockchain/geth/**
-blockchain/keystore/**
-blockchain/history
-
-#truffle
-yarn.lock
-package-lock.json
+# yarn v2
 
 ### SublimeText ###
 # Cache files for Sublime Text
@@ -355,6 +324,7 @@ package-lock.json
 
 # SFTP configuration file
 sftp-config.json
+sftp-config-alt*.json
 
 # Package control specific files
 Package Control.last-run
@@ -380,9 +350,12 @@ GitHub.sublime-settings
 !.vscode/extensions.json
 *.code-workspace
 
+# Local History for Visual Studio Code
+.history/
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/node,macos,solidity,sublimetext,intellij+all,soliditytruffle,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/node,macos,solidity,sublimetext,intellij+all,visualstudiocode

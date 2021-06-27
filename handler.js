@@ -21,7 +21,7 @@ async function writer(event, context) {
   return success("OK");
 }
 
-// helpers
+// wrapper
 
 function success(result) {
   return {
@@ -40,6 +40,8 @@ async function catchErrors(event, context) {
     };
   }
 }
+
+// example
 
 async function fetchGZippedResponse() {
   const response = await fetch("https://httpbin.org/gzip"); // returns gzipped response with request info
