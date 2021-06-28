@@ -1,37 +1,37 @@
-const path = require("path");
-const fs = require("fs-extra");
-const fetch = require("node-fetch");
+import path from "path";
+import fs from "fs-extra";
+import fetch from "node-fetch";
 
-const storage = path.resolve(process.env.HOME_DIR, "storage.json");
+const storage = path.resolve(process.env.HOME_DIR!!, "storage.json");
 
 // handlers
 
-async function reader(event, context) {
+async function _reader(event: any, context: any) {
   const param = event.pathParameters.param;
   console.log(`reader running with param = ${param}`);
-  const {timestamp, writeIP} = await fs.readJson(storage);
+  const { timestamp, writeIP } = await fs.readJson(storage);
   const readIP = (await fetchJson()).origin;
-  return success({param, timestamp: new Date(timestamp), writeIP, readIP, event, context});
+  return success({ param, timestamp: new Date(timestamp), writeIP, readIP, event, context });
 }
 
-async function writer(event, context) {
+async function _writer(event: any, context: any) {
   await fs.ensureFile(storage);
   const timestamp = new Date().getTime();
   const writeIP = (await fetchJson()).origin;
-  await fs.writeJson(storage, {timestamp, writeIP});
+  await fs.writeJson(storage, { timestamp, writeIP });
   return success("OK");
 }
 
 // wrapper
 
-function success(result) {
+function success(result: any) {
   return {
     statusCode: 200,
     body: JSON.stringify(result, null, 2),
   };
 }
 
-async function catchErrors(event, context) {
+async function catchErrors(this: any, event: any, context: any) {
   try {
     return await this(event, context);
   } catch (err) {
@@ -53,7 +53,5 @@ async function fetchJson() {
 
 // exports
 
-module.exports = {
-  reader: catchErrors.bind(reader),
-  writer: catchErrors.bind(writer),
-}
+export const reader = catchErrors.bind(_reader);
+export const writer = catchErrors.bind(_writer);
