@@ -14,7 +14,7 @@
 
     * This template has two functions. If you don't need *writer* that is scheduled repeatedly and *reader* that is triggered by GET requests, edit `functions` to create the functions you need. See [serverless.com reference](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/) and [serverless.com examples](https://www.serverless.com/examples/).
 
-3. Edit the file `handler.js` to add your logic.
+3. Edit the file `handler.ts` to add your logic.
 
 4. Your changes will automatically deploy to AWS on every commmit to master. See the deploy log in Github Actions to get the *reader* URL endpoint on AWS.
 
