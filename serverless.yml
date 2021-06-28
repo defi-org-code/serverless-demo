@@ -7,12 +7,12 @@ provider: ${file(./serverless-provider.yml)}
 
 functions:
   writer:
-    handler: handler.writer
+    handler: index.writer
     fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - schedule: rate(1 day) # examples: rate(1 minute), rate(60 minutes)
   reader:
-    handler: handler.reader
+    handler: index.reader
     fileSystemConfig: ${file(./serverless-fs.yml)}
     events:
       - http:
