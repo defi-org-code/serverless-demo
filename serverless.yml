@@ -5,6 +5,12 @@ custom:
 
 provider: ${file(./serverless-provider.yml)}
 
+package:
+  patterns:
+    - '!*'
+    - '!*/**'
+    - dist/index.js
+
 functions:
   writer:
     handler: dist/index.writer
