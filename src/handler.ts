@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import fetch from "node-fetch";
 
 const storage = path.resolve(process.env.HOME_DIR!!, "storage.json");
+const SECRETS = process.env.REPO_SECRETS_JSON ? JSON.parse(process.env.REPO_SECRETS_JSON) : {};
 
 // handlers
 
