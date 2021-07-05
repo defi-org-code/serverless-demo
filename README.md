@@ -36,6 +36,11 @@
 
 * Automatic CI using Github Actions that will deploy your lambda functions to AWS on every commit to master. You don't need to open AWS console at all, not even for the first deployment.
 
+* Automatically use github secrets in your code
+
+    1. Go to your repository's secrets and add a secret with the prefix `SECRET_`, e.g `SECRET_TWITTER_API`
+    2. In your code, use `SECRETS.TWITTER_API` (notice `SECRETS` object in handler.ts file)
+
 ### Do you need to configure anything manually on AWS?
 
 * The template relies on several shared resources on AWS that were already created manually. You're not supposed to create any AWS resources yourself.
