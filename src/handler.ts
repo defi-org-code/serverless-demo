@@ -1,8 +1,10 @@
 import path from "path";
 import fs from "fs-extra";
 import fetch from "node-fetch";
+import os from "os";
 
-const storage = path.resolve(process.env.HOME_DIR!!, "storage.json");
+const storage = path.resolve(process.env.HOME_DIR || os.tmpdir(), "storage.json");
+const secrets = JSON.parse(process.env.REPO_SECRETS_JSON || "{}");
 
 // handlers
 
