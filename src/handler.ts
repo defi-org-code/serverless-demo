@@ -55,5 +55,5 @@ async function fetchJson() {
 
 // exports
 
-export const reader = catchErrors.bind(_reader);
 export const writer = catchErrors.bind(_writer);
+export const reader = catchErrors.bind(_reader);
