@@ -38,8 +38,8 @@
 
 * Automatically use github secrets in your code
 
-    1. Go to your repository's secrets and add a secret with the prefix `SECRET_`, e.g `SECRET_TWITTER_API`
-    2. In your code, use `SECRETS.TWITTER_API` (notice `SECRETS` object in handler.ts file)
+    1. Go to your repository's secrets and add a secret , e.g `TWITTER_API`
+    2. In your code, use `REPO_SECRETS_JSON.TWITTER_API` (notice `SECRETS` object in handler.ts file)
 
 ### Do you need to configure anything manually on AWS?
 
